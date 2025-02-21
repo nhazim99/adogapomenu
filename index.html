@@ -597,23 +597,94 @@
       const feedbackElement = document.getElementById("grammarFeedback");
       
       const rules = [
-    // Correct cases
-    { pattern: /^There is (?:zero|one) (book|chair|shelf|bike|person|window)\.$/, feedback: "Correct sentence!", sound: "sounds/correct.mp3" },
-    { pattern: /^There are (?:two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty) (books|chairs|shelves|bikes|people|windows)\.$/, feedback: "Correct sentence!", sound: "sounds/correct.mp3" },
-    { pattern: /^There are some (books|chairs|shelves|bikes|people|windows)\.$/, feedback: "Correct sentence!", sound: "sounds/correct.mp3" },
-    { pattern: /^There are a lot of (books|chairs|shelves|bikes|people|windows)\.$/, feedback: "Correct sentence!", sound: "sounds/correct.mp3" },
+  // Correct cases
+  {
+    pattern: /^There is (?:zero|one) (book|chair|shelf|bike|person|window)\.$/,
+    feedback: "Correct sentence!",
+    sound: "sounds/correct.mp3"
+  },
+  {
+    pattern: /^There are (?:two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty) (books|chairs|shelves|bikes|people|windows)\.$/,
+    feedback: "Correct sentence!",
+    sound: "sounds/correct.mp3"
+  },
+  {
+    pattern: /^There are some (books|chairs|shelves|bikes|people|windows)\.$/,
+    feedback: "Correct sentence!",
+    sound: "sounds/correct.mp3"
+  },
+  {
+    pattern: /^There are a lot of (books|chairs|shelves|bikes|people|windows)\.$/,
+    feedback: "Correct sentence!",
+    sound: "sounds/correct.mp3"
+  },
+  // New rule for "There is a ___." singular
+  {
+    pattern: /^There is a (book|chair|shelf|bike|person|window)\.$/,
+    feedback: "Correct sentence!",
+    sound: "sounds/correct.mp3"
+  },
 
-    // Incorrect cases
-    { pattern: /^There is (?:two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty) (book|chair|shelf|bike|person|window)\.$/, feedback: "Incorrect. 'is' is for singular nouns only.", sound: "sounds/incorrect.mp3" },
-    { pattern: /^There are (?:zero|one) (books|chairs|shelves|bikes|people|windows)\.$/, feedback: "Incorrect. 'are' is for plural nouns only.", sound: "sounds/incorrect.mp3" },
-    { pattern: /^There is some (books|chairs|shelves|bikes|people|windows)\.$/, feedback: "Incorrect. 'some' requires plural nouns.", sound: "sounds/incorrect.mp3" },
-    { pattern: /^There is a lot of (books|chairs|shelves|bikes|people|windows)\.$/, feedback: "Incorrect. 'a lot of' requires plural nouns.", sound: "sounds/incorrect.mp3" },
-    { pattern: /^There are a (book|chair|shelf|bike|person|window)\.$/, feedback: "Incorrect. 'are' requires plural nouns.", sound: "sounds/incorrect.mp3" },
-    { pattern: /^There is (?:zero|one) (books|chairs|shelves|bikes|people|windows)\.$/, feedback: "Incorrect. Singular 'is' cannot be used with plural nouns.", sound: "sounds/incorrect.mp3" },
-    { pattern: /^There are (?:two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty) (book|chair|shelf|bike|person|window)\.$/, feedback: "Incorrect. Plural number must match plural noun.", sound: "sounds/incorrect.mp3" },
-    { pattern: /^There is a lot of (book|chair|shelf|bike|person|window)\.$/, feedback: "Incorrect. 'a lot of' requires plural nouns.", sound: "sounds/incorrect.mp3" },
-    { pattern: /^There are some (book|chair|shelf|bike|person|window)\.$/, feedback: "Incorrect. 'some' requires plural nouns.", sound: "sounds/incorrect.mp3" },
-    { pattern: /^There (?:is|are) (?:-?\d+|[^\d]*) (book|chair|shelf|bike|person|window|books|chairs|shelves|bikes|people|windows)\.$/, feedback: "Incorrect. Only numbers from zero to twenty are allowed.", sound: "sounds/incorrect.mp3" }
+  // Incorrect cases
+  {
+    pattern: /^There is (?:two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty) (book|chair|shelf|bike|person|window)\.$/,
+    feedback: "Incorrect. 'is' is for singular nouns only.",
+    sound: "sounds/incorrect.mp3"
+  },
+  {
+    pattern: /^There are (?:zero|one) (books|chairs|shelves|bikes|people|windows)\.$/,
+    feedback: "Incorrect. 'are' is for plural nouns only.",
+    sound: "sounds/incorrect.mp3"
+  },
+  {
+    pattern: /^There is some (books|chairs|shelves|bikes|people|windows)\.$/,
+    feedback: "Incorrect. 'some' requires plural nouns.",
+    sound: "sounds/incorrect.mp3"
+  },
+  {
+    pattern: /^There is a lot of (books|chairs|shelves|bikes|people|windows)\.$/,
+    feedback: "Incorrect. 'a lot of' requires plural nouns.",
+    sound: "sounds/incorrect.mp3"
+  },
+  {
+    pattern: /^There are a (book|chair|shelf|bike|person|window)\.$/,
+    feedback: "Incorrect. 'are' requires plural nouns.",
+    sound: "sounds/incorrect.mp3"
+  },
+  {
+    pattern: /^There is (?:zero|one) (books|chairs|shelves|bikes|people|windows)\.$/,
+    feedback: "Incorrect. Singular 'is' cannot be used with plural nouns.",
+    sound: "sounds/incorrect.mp3"
+  },
+  {
+    pattern: /^There are (?:two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty) (book|chair|shelf|bike|person|window)\.$/,
+    feedback: "Incorrect. Plural number must match plural noun.",
+    sound: "sounds/incorrect.mp3"
+  },
+  {
+    pattern: /^There is a lot of (book|chair|shelf|bike|person|window)\.$/,
+    feedback: "Incorrect. 'a lot of' requires plural nouns.",
+    sound: "sounds/incorrect.mp3"
+  },
+  {
+    pattern: /^There are some (book|chair|shelf|bike|person|window)\.$/,
+    feedback: "Incorrect. 'some' requires plural nouns.",
+    sound: "sounds/incorrect.mp3"
+  },
+
+  // Numeric fallback: catches any number outside zero–twenty or other numeric mismatches
+  {
+    pattern: /^There (?:is|are) (-?\d+) (book|chair|shelf|bike|person|window|books|chairs|shelves|bikes|people|windows)\.$/,
+    feedback: "Incorrect. Only numbers from zero to twenty are allowed.",
+    sound: "sounds/incorrect.mp3"
+  },
+
+  // Final fallback for unrecognized structures
+  {
+    pattern: /^There (?:is|are)/,
+    feedback: "Invalid structure. Check subject-verb agreement or usage.",
+    sound: "sounds/incorrect.mp3"
+  }
 ];
 
       const matchedRule = rules.find(rule => rule.pattern.test(sentence));
